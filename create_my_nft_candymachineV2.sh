@@ -61,8 +61,8 @@ echo "Candy Machine account is $CANDY_MACHINE"
 echo "Starting local UI localhost:3000 for you to mint, you can use Firefox/Chrome Phantom extension and mint"
 echo "Use 'solana airdrop 2 YOUR_WALLET' to airdrop 2 solana to your Phantom wallet to mint"
 
-pushd metaplex/js/packages/candy-machine-ui
-yarn install && yarn start
-popd
+echo "To start a local mint server and UI, run the following. It will reset your screen, so review logs if necessary before running it."
+echo "cd metaplex/js/packages/candy-machine-ui"
+echo "yarn install && yarn start"
 
 exit 0
