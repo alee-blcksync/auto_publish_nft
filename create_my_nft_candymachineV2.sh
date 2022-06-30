@@ -51,6 +51,13 @@ ts-node $CURR_DIR/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts \
   -k $CURR_DIR/devnet-keypair.json \
   -cp $CURR_DIR/metaplex/js/packages/cli/example-candy-machine-upload-config.json \
   $CURR_DIR/metaplex/assets | tee $CURR_DIR/metaplex.log
+
+echo "Verifying upload"
+ts-node $CURR_DIR/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts \
+  verify_upload \
+  -e devnet \
+  -k $CURR_DIR/devnet-keypair.json \
+  $CURR_DIR/metaplex/assets 
 popd
 
 # Apply Candy Machine here to apply to UI
