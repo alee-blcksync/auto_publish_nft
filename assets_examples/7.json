@@ -1,0 +1,54 @@
+{
+  "name": "AAA VVV #7",
+  "symbol": "AAA",
+  "description": "The creation on one part of human",
+  "seller_fee_basis_points": 1000,
+  "image": "7.png",
+  "external_url": "https://solfren.xyz/test0001/doesnotexist",
+  "edition": 7,
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Black"
+    },
+    {
+      "trait_type": "Eyeball",
+      "value": "Red"
+    },
+    {
+      "trait_type": "Eye color",
+      "value": "Pink"
+    },
+    {
+      "trait_type": "Iris",
+      "value": "Small"
+    },
+    {
+      "trait_type": "Shine",
+      "value": "Shapes"
+    },
+    {
+      "trait_type": "Bottom lid",
+      "value": "Middle"
+    },
+    {
+      "trait_type": "Top lid",
+      "value": "Low"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "7.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": [
+      {
+        "address": "REPLACEME_WITH_WALLET",
+        "share": 100
+      }
+    ]
+  }
+}
