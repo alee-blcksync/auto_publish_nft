@@ -1,6 +1,50 @@
 #!/bin/bash
 
 CURR_DIR=$(cd $(dirname $0); pwd)
+unset ENABLE_CAPTCHA
+
+function help() {
+  cat <<EOF
+NAME
+      $0 - automatically publish NFT from examples to DEVNET with/without CAPTCHA human verification during MINT.
+
+SYNOPSIS
+
+      $0 [-c]
+      $0 -h
+
+DESCRIPTION
+      
+      The command line options are as follows:
+  
+      -c
+          optional, it enables CAPTCHA to verify if the person minting is human, default is off.
+      -h
+          print this help and silently exit
+EOF
+}
+
+while getopts 'ch' OPTION
+do
+  case "$OPTION" in
+    c) ENABLE_CAPTCHA="true"
+       ;;
+    h) help
+       exit 1
+       ;;
+    *) help
+       exit 1
+       ;;
+  esac
+done
+
+CANDY_MACHINE_CONFIG=example-candy-machine-upload-config.json
+if [ "x${ENABLE_CAPTCHA}" = "xtrue" ] ; then
+  CANDY_MACHINE_CONFIG=example-candy-machine-upload-config.json
+  echo "CAPTCHA is enabled for minting UI. solana CLI minting will be disabled!!!!"
+else
+  CANDY_MACHINE_CONFIG=example-candy-machine-upload-config.nocaptcha.json
+fi
 
 solana --version
 solana-keygen new --no-bip39-passphrase --outfile $CURR_DIR/mynft-keypair.json
@@ -41,7 +85,7 @@ mkdir -p metaplex/assets
 rm -f metaplex/assets/*
 cp -rp uploaded_assets/* metaplex/assets/
 rm -f metaplex/js/packages/candy-machine-ui/.env.example
-cat example-candy-machine-upload-config.json | sed "s/REPLACEME_GOLIVE_DATE/$TIMENOW/g" | sed "s/REPLACEME_TREASURY_WALLET/$treasury_wallet/g" > metaplex/js/packages/cli/example-candy-machine-upload-config.json
+cat $CANDY_MACHINE_CONFIG | sed "s/REPLACEME_GOLIVE_DATE/$TIMENOW/g" | sed "s/REPLACEME_TREASURY_WALLET/$treasury_wallet/g" > metaplex/js/packages/cli/example-candy-machine-upload-config.json
 TIMENOW=$(date +"%d %B %Y %H:%M:%S GMT")
 pushd metaplex/js
 yarn install
