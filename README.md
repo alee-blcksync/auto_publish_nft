@@ -145,7 +145,7 @@ cd metaplex/js/packages/candy-machine-ui
 yarn install && yarn start
 ```
 
-- Open localhost:3000
+- Open `localhost:3000` from your browser.
 
   ![mint_ui.0000.png](./doc/mint_examples/mint_ui.0000.png)
 
