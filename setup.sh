@@ -22,7 +22,9 @@ if [ $ret != "0" ] ; then
   brew install nvm
   mkdir ~/.nvm
   brew cleanup
-  export NVM_DIR="$HOME/.nvm"\n  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh" \n  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
 else
   echo "nvm version $nvm_version detected, we will use v16 here."
 fi
@@ -58,8 +60,10 @@ ts-node --version
 # M1 = arm64
 HW_CPU_SPEC=$(uname -m)
 if [ "x${HW_CPU_SPEC}" != "x86_64" ] ; then
-  echo "WARNING: CPU Intel chip not detected, Apple M1 chip? additional dependencies required! See"
+  echo "***WARNING***: CPU Intel chip not detected, Apple M1 chip? additional dependencies required! See"
   echo "https://docs.metaplex.com/candy-machine-v2/getting-started#apple-m1-chip"
+  echo "You will want to run the following command to support M1 Chip:"
+  echo "brew install pkg-config cairo pango libpng jpeg giflib librsvg"
 fi
 
 # use master branch
