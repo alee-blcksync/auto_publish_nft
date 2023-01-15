@@ -1,8 +1,8 @@
 {
   "price": 0.05,
-  "number": 10,
+  "number": 9,
   "gatekeeper": {
-    "gatekeeperNetwork": "ignREusXmGrscGNUesoU9mxfds9AiYTezUKex2PsZV6",
+    "gatekeeperNetwork": null,
     "expireOnUse" : true
   },
   "solTreasuryAccount": "REPLACEME_TREASURY_WALLET",
@@ -12,7 +12,7 @@
   "endSettings": null,
   "whitelistMintSettings": null,
   "hiddenSettings": null,
-  "storage": "arweave",
+  "storage": "arweave-sol",
   "ipfsInfuraProjectId": null,
   "ipfsInfuraSecret": null,
   "awsS3Bucket": null,
