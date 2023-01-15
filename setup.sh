@@ -17,14 +17,18 @@ echo "https://docs.metaplex.com/candy-machine-v2/getting-started"
 nvm_version=$(nvm version 2>/dev/null)
 ret=$?
 if [ $ret != "0" ] ; then
-  echo "nvm not installed, we use nvm to install Node.js and switch between version."
-  echo "installing nvm now, Ctrl+C if you don't want to run this. Comment these line out as needed."
-  brew install nvm
-  mkdir ~/.nvm
-  brew cleanup
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+  if [[ ! "$nvm_version" =~ ^v16 ]] ; then
+    if [ ! -f "/usr/local/opt/nvm/nvm.sh" ] ; then
+      echo "nvm v16 version not installed or corrupted, we use nvm to install Node.js and switch between version."
+      echo "installing/re-installing nvm now, Ctrl+C if you don't want to run this. Comment these line out as needed."
+      brew install nvm
+      mkdir ~/.nvm
+      brew cleanup
+    fi
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
+    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+  fi
 else
   echo "nvm version $nvm_version detected, we will use v16 here."
 fi
@@ -56,16 +60,30 @@ npm install -g ts-node
 # 10.7.0
 ts-node --version
 
+SUGAR_RELEASE_BINARY="https://github.com/metaplex-foundation/sugar/releases/download/v1.2.1/sugar-macos-intel-latest"
+
 # intel = x86_64
 # M1 = arm64
 HW_CPU_SPEC=$(uname -m)
-if [ "x${HW_CPU_SPEC}" != "x86_64" ] ; then
+if [ "x${HW_CPU_SPEC}" != "xx86_64" ] ; then
   echo "***WARNING***: CPU Intel chip not detected, Apple M1 chip? additional dependencies required! See"
   echo "https://docs.metaplex.com/candy-machine-v2/getting-started#apple-m1-chip"
   echo "You will want to run the following command to support M1 Chip:"
   echo "brew install pkg-config cairo pango libpng jpeg giflib librsvg"
+  echo "Switching sugar binary to M1 version, default is set to Intel x86_64"
+  SUGAR_RELEASE_BINARY="https://github.com/metaplex-foundation/sugar/releases/download/v1.2.1/sugar-macos-m1-latest"
 fi
 
 # use master branch
 git clone -b master https://github.com/metaplex-foundation/metaplex.git
 
+# we will be switching over to use sugar CLI moving forward
+mkdir sugar
+pushd sugar
+if [ -f ./sugar ] ; then
+  rm -f ./sugar
+fi
+curl -L "$SUGAR_RELEASE_BINARY" --output sugar
+chmod +x sugar
+./sugar -V
+popd
